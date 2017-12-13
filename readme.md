@@ -34,7 +34,7 @@ To get the most out of this tutorial:
 
 - Grab starter code (zip file)
 - Follow along, but don't worry about typing everything.
-  - (The final version is in on Github!)
+  - Download the [final version here](https://github.com/radishmouse/digitalcrafts-meetup-pacman/releases/download/v1.0/dc-pacman-final.zip).
 - Yes, the video will be available!
 
 ## Setup
