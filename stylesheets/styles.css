@@ -1,3 +1,9 @@
+/*-----------------------------------------------------------*/
+/* This is the "border-box hack" providing intuitive control */
+/* over the height and width of elements on the screen.      */
+/* Courtesy of:                                              */
+/* https://www.paulirish.com/2012/box-sizing-border-box-ftw/ */
+/*-----------------------------------------------------------*/
 html {
   box-sizing: border-box;
 }
@@ -6,6 +12,10 @@ html {
   box-sizing: inherit;
 }
 
+
+/*-----------------------------------------------------------*/
+/* We want the page to be black and our game board centered. */
+/*-----------------------------------------------------------*/
 body {
   background-color: black;
 }
@@ -15,15 +25,50 @@ body > div {
   text-align: center;
 }
 
+
+/*-----------------------------------------------------------*/
+/* Every game tile should be 50px by 50px and sitting next   */
+/* one another.                                              */
+/*-----------------------------------------------------------*/
 .tile {
+  /* Set the dimensions of each tile. */
   width: 50px;
   height: 50px;
+
+  /* Make them sit snugly together */
   display: inline-block;
   vertical-align: top;
-  background-color: black;
 }
 
+
+/*-----------------------------------------------------------*/
+/* Pacman will encounter walls and coins.                    */
+/* Pacman can't move through walls, but can eat coins.       */
+/*-----------------------------------------------------------*/
+
+/* Walls are blue with an off-blue border. */
+.wall {
+  background-color: blue;
+  border: 2px solid cornflowerblue;
+}
+
+/* Coins are made by rounding the corners and  */
+/* making them much smaller than 50px by 50px. */
+.coin {
+  background-color: yellow;
+  border-radius: 50%;
+  transform: scale(0.3);
+}
+
+
+/*-----------------------------------------------------------*/
+/* We make pacman appear to face different directions by     */
+/* using different background images based on class name.    */
+/*-----------------------------------------------------------*/
 .pacman {
+  /* Image urls are relative to the stylesheet.      */
+  /* The '../images' means: "go to the parent folder */
+  /* then look inside the images folder.             */
   background-image: url('../images/mizpacman.png');
 }
 
@@ -37,15 +82,4 @@ body > div {
 
 .down {
   background-image: url('../images/mizpacman-down.png');
-}
-
-.wall {
-  background-color: blue;
-  border: 2px solid cornflowerblue;
-}
-
-.coin {
-  background-color: yellow;
-  border-radius: 50%;
-  transform: scale(0.3);
 }
