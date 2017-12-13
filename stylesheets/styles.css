@@ -1,3 +1,15 @@
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  background-color: black;
+}
+
 
 .tile {
   width: 50px;
@@ -8,29 +20,28 @@
 }
 
 .pacman {
-  background-image: url('../images/pacman.png');
+  background-image: url('../images/mizpacman.png');
 }
 
 .left {
-  background-image: url('../images/pacman-left.png');
+  background-image: url('../images/mizpacman-left.png');
 }
 
 .up {
-  background-image: url('../images/pacman-up.png');
+  background-image: url('../images/mizpacman-up.png');
 }
 
 .down {
-  background-image: url('../images/pacman-down.png');
+  background-image: url('../images/mizpacman-down.png');
 }
 
 .wall {
-  background-image: url('../images/wall.png');
+  background-color: blue;
+  border: 2px solid cornflowerblue;
 }
 
 .coin {
-  background-image: url('../images/coin.png');
-}
-
-.ground {
-  background-image: url('../images/bg.png');
+  background-color: yellow;
+  border-radius: 50%;
+  transform: scale(0.3);
 }
