@@ -84,6 +84,8 @@ Most web pages are built using these three technologies: HTML, CSS, and JavaScri
 
 # Some handy keyboard shortcuts in vs code:
 
-- move line up/down: opt + up/down
-- toggle comment: cmd + /
+- move line up/down: `opt + up/down`
+- toggle comment: `cmd + /`
+
+You can find a listing of more shortcuts [on the vs code website](https://code.visualstudio.com/docs/getstarted/keybindings).
 
