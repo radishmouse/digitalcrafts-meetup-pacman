@@ -5,10 +5,21 @@
   display: inline-block;
   vertical-align: top;
   /* margin: -2px; */
+  background-color: black;
 }
 
 .pacman {
   background-image: url('pacman.png');
+}
+
+.left {
+  background-image: url('pacman-left.png');
+}
+.up {
+  background-image: url('pacman-up.png');
+}
+.down {
+  background-image: url('pacman-down.png');
 }
 
 .wall {

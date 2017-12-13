@@ -20,7 +20,8 @@ let map;
 
 let pacman = {
   x: 6,
-  y: 4
+  y: 4,
+  direction: 'right'
 };
 
 function createTiles(layoutInfo) {
@@ -38,6 +39,7 @@ function createTiles(layoutInfo) {
         piece.classList.add('ground');
       } else if (col == PACMAN) {
         piece.classList.add('pacman');
+        piece.classList.add(pacman.direction);
       }
 
       tilesArray.push(piece);
@@ -64,42 +66,38 @@ function eraseMap() {
 }
 
 function moveDown() {
+  pacman.direction = 'down';
   if (layout[pacman.y+1][pacman.x] !== 1){
     layout[pacman.y][pacman.x] = 3;
     pacman.y = pacman.y + 1 ;
     layout[pacman.y][pacman.x] = 5;
-    eraseMap();
-    drawMap();
   }
 }
 
 function moveUp() {
+  pacman.direction = 'up';
   if (layout[pacman.y-1][pacman.x] !== 1){
     layout[pacman.y][pacman.x] = 3;
     pacman.y = pacman.y - 1;
     layout[pacman.y][pacman.x] = 5;
-    eraseMap();
-    drawMap();
   }
 }
 
 function moveLeft() {
+  pacman.direction = 'left';
   if (layout[pacman.y][pacman.x-1] !== 1){
     layout[pacman.y][pacman.x] = 3;
     pacman.x = pacman.x - 1 ;
     layout[pacman.y][pacman.x] = 5;
-    eraseMap();
-    drawMap();
   }
 }
 
 function moveRight() {
+  pacman.direction = 'right';
   if (layout[pacman.y][pacman.x+1] !== 1){
     layout[pacman.y][pacman.x] = 3;
     pacman.x = pacman.x + 1 ;
     layout[pacman.y][pacman.x] = 5;
-    eraseMap();
-    drawMap();
   }
 }
 
@@ -114,6 +112,8 @@ function setupControls() {
     } else if (e.keyCode === 40){
       moveDown();
     }
+    eraseMap();
+    drawMap();
   });
 }
 
