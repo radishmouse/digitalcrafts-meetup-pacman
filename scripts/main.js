@@ -53,51 +53,6 @@ function createTiles(data) {
   // We'll keep the DOM elements in an array.
   let tilesArray = [];
 
-  // Let's take one row at a time...
-  for (let row of data) {
-
-    // Then look at each column in that row.
-    for (let col of row) {
-
-      // We create a game tile as a div element.
-      let tile = document.createElement('div');
-
-      // We assign every tile the class name tile.
-      tile.classList.add('tile');
-
-      // Now, depending on the numerical value,
-      // we need to add a more specific class.
-      if (col === WALL) {
-        tile.classList.add('wall');
-
-      } else if (col === COIN) {
-        tile.classList.add('coin');
-
-      } else if (col === GROUND) {
-        tile.classList.add('ground');
-
-      } else if (col === PACMAN) {
-        tile.classList.add('pacman');
-
-        // For Pacman, we will add yet another
-        // class for the direction pacman is facing.
-        tile.classList.add(pacman.direction);
-
-      }
-
-      // Now that our individual tile is configured,
-      // we add it to the tilesArray.
-      tilesArray.push(tile);
-    }
-
-    // Once we reach the end of a row, we create a br element,
-    // which tells the browser to create a line break on the page.
-    let brTile = document.createElement('br');
-
-    // We then add that br element to the tilesArray.
-    tilesArray.push(brTile);
-  }
-
   // At the end of our function, we return the array
   // of configured tiles.
   return tilesArray;
@@ -109,9 +64,6 @@ function drawMap() {
   map = document.createElement('div');
 
   let tiles = createTiles(gameData);
-  for (let tile of tiles) {
-    map.appendChild(tile);
-  }
 
   document.body.appendChild(map);
 }
@@ -174,25 +126,7 @@ function moveRight() {
 function setupKeyboardControls() {
   document.addEventListener('keydown', function (e) {
 
-    // As far as the browser is concerned, each key on the keyboard
-    // is associated with a numeric value.
-    // After some experimenting, you can discover which numeric values
-    // correspond to the arrow keys.
-
-    // Each time the user moves, we recalculate Pacman's location,
-    // update the
-    if (e.keyCode === 37) {         // left arrow is 37
-      moveLeft();
-
-    } else if (e.keyCode === 38) {  // up arrow is 38
-      moveUp();
-
-    } else if (e.keyCode === 39){   // right arrow is 39
-      moveRight();
-
-    } else if (e.keyCode === 40){   // down arrow is 40
-      moveDown();
-    }
+    console.log(e.keyCode);
 
     // After every move, we erase the map and redraw it.
     eraseMap();
