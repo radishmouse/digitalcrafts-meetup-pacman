@@ -32,7 +32,7 @@ By the end of the tutorial, you should be able to answer these questions:
 
 To get the most out of this tutorial:
 
-- Grab starter code (zip file)
+- Grab the [starter code](https://github.com/radishmouse/digitalcrafts-meetup-pacman/releases/download/v1.0-starter/dc-pacman-starter.zip).
 - Follow along, but don't worry about typing everything.
   - Download the [final version here](https://github.com/radishmouse/digitalcrafts-meetup-pacman/releases/download/v1.0/dc-pacman-final.zip).
 - Yes, the video will be available!
