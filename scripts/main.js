@@ -1,5 +1,5 @@
 
-var layout = [
+let layout = [
   [1,1,1,1,1,1,1,1,1,1,1,1,1],
   [1,2,2,2,2,2,1,2,2,2,2,2,1],
   [1,2,1,1,1,2,1,2,1,1,1,2,1],
@@ -11,8 +11,8 @@ var layout = [
   [1,1,1,1,1,1,1,1,1,1,1,1,1]
 ];
 
-const WALL = 1;
-const COIN = 2;
+const WALL   = 1;
+const COIN   = 2;
 const GROUND = 3;
 const PACMAN = 5;
 
@@ -26,26 +26,31 @@ let pacman = {
 
 function createTiles(layoutInfo) {
   let tilesArray = [];
+
   for (let row of layoutInfo) {
     for (let col of row) {
-      let piece = document.createElement('div');
-      piece.classList.add('tile');
+      let tile = document.createElement('div');
+      tile.classList.add('tile');
 
-      if (col == WALL) {
-        piece.classList.add('wall');
-      } else if (col == COIN) {
-        piece.classList.add('coin');
-      } else if (col == GROUND) {
-        piece.classList.add('ground');
-      } else if (col == PACMAN) {
-        piece.classList.add('pacman');
-        piece.classList.add(pacman.direction);
+      if (col === WALL) {
+        tile.classList.add('wall');
+
+      } else if (col === COIN) {
+        tile.classList.add('coin');
+
+      } else if (col === GROUND) {
+        tile.classList.add('ground');
+
+      } else if (col === PACMAN) {
+        tile.classList.add('pacman');
+        tile.classList.add(pacman.direction);
+
       }
 
-      tilesArray.push(piece);
+      tilesArray.push(tile);
     }
-    let br = document.createElement('br');
-    tilesArray.push(br);
+    let brTile = document.createElement('br');
+    tilesArray.push(brTile);
   }
 
   return tilesArray;
@@ -53,6 +58,7 @@ function createTiles(layoutInfo) {
 
 function drawMap() {
   map = document.createElement('div');
+
   let tiles = createTiles(layout);
   for (let tile of tiles) {
     map.appendChild(tile);
@@ -67,37 +73,37 @@ function eraseMap() {
 
 function moveDown() {
   pacman.direction = 'down';
-  if (layout[pacman.y+1][pacman.x] !== 1){
-    layout[pacman.y][pacman.x] = 3;
+  if (layout[pacman.y+1][pacman.x] !== WALL) {
+    layout[pacman.y][pacman.x] = GROUND;
     pacman.y = pacman.y + 1 ;
-    layout[pacman.y][pacman.x] = 5;
+    layout[pacman.y][pacman.x] = PACMAN;
   }
 }
 
 function moveUp() {
   pacman.direction = 'up';
-  if (layout[pacman.y-1][pacman.x] !== 1){
-    layout[pacman.y][pacman.x] = 3;
+  if (layout[pacman.y-1][pacman.x] !== WALL) {
+    layout[pacman.y][pacman.x] = GROUND;
     pacman.y = pacman.y - 1;
-    layout[pacman.y][pacman.x] = 5;
+    layout[pacman.y][pacman.x] = PACMAN;
   }
 }
 
 function moveLeft() {
   pacman.direction = 'left';
-  if (layout[pacman.y][pacman.x-1] !== 1){
-    layout[pacman.y][pacman.x] = 3;
+  if (layout[pacman.y][pacman.x-1] !== WALL) {
+    layout[pacman.y][pacman.x] = GROUND;
     pacman.x = pacman.x - 1 ;
-    layout[pacman.y][pacman.x] = 5;
+    layout[pacman.y][pacman.x] = PACMAN;
   }
 }
 
 function moveRight() {
   pacman.direction = 'right';
-  if (layout[pacman.y][pacman.x+1] !== 1){
-    layout[pacman.y][pacman.x] = 3;
+  if (layout[pacman.y][pacman.x+1] !== WALL) {
+    layout[pacman.y][pacman.x] = GROUND;
     pacman.x = pacman.x + 1 ;
-    layout[pacman.y][pacman.x] = 5;
+    layout[pacman.y][pacman.x] = PACMAN;
   }
 }
 
