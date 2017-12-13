@@ -4,7 +4,6 @@
   height: 50px;
   display: inline-block;
   vertical-align: top;
-  /* margin: -2px; */
   background-color: black;
 }
 
@@ -15,9 +14,11 @@
 .left {
   background-image: url('../images/pacman-left.png');
 }
+
 .up {
   background-image: url('../images/pacman-up.png');
 }
+
 .down {
   background-image: url('../images/pacman-down.png');
 }
