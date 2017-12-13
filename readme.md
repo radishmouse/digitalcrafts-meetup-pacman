@@ -70,7 +70,7 @@ Most web pages are built using these three technologies: HTML, CSS, and JavaScri
 - There are default styles built into the browser, but you can specify custom ones.
 - The best way to associate styles with an element on the page? use classes
 
-## what is javascript
+## Using JavaScript
 
 - A variable is a programming term for a label or an identifier.
   - You need variables so that you can refer to data using a convenient name.
