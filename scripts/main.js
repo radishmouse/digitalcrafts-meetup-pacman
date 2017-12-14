@@ -281,18 +281,16 @@ function setupKeyboardControls() {
 
     // Each time the user moves, we recalculate Pacman's location,
     // update the
-    if (e.key === "Meta") {
-      return;
-    } else if (e.keyCode === KEYS.LEFT) {   // left arrow is 37
+    if (e.keyCode === KEYS.LEFT) {
       moveLeft();
       e.preventDefault();
-    } else if (e.keyCode === KEYS.UP) {     // up arrow is 38
+    } else if (e.keyCode === KEYS.UP) {
       moveUp();
       e.preventDefault();
-    } else if (e.keyCode === KEYS.RIGHT){   // right arrow is 39
+    } else if (e.keyCode === KEYS.RIGHT){
       moveRight();
       e.preventDefault();
-    } else if (e.keyCode === KEYS.DOWN){    // down arrow is 40
+    } else if (e.keyCode === KEYS.DOWN){
       moveDown();
       e.preventDefault();
     }
@@ -309,14 +307,7 @@ function setup() {
   setupKeyboardControls();
 
   // place pacman initially
-  updateGameData(gameData,
-    pacman,
-    pacman.x,
-    pacman.y,
-    pacman.x,
-    pacman.y,
-    GAME_PIECES.PACMAN.objId,
-    GAME_PIECES.PACMAN.objId);
+  placeObj(GAME_PIECES.PACMAN.objId, pacman.x, pacman.y);
   render();
 }
 
