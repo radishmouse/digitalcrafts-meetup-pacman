@@ -83,3 +83,9 @@ body > div {
 .down {
   background-image: url('../images/mizpacman-down.png');
 }
+
+.ghost {
+  background-color: red;
+  border-radius: 50%;
+  transform: scale(0.3);
+}
