@@ -211,12 +211,6 @@ function moveDown() {
 
 function moveUp() {
   pacman.direction = 'up';
-  // if (gameData[pacman.y-1][pacman.x] !== GAME_PIECES.WALL.objId) {
-  //   gameData[pacman.y][pacman.x] = GAME_PIECES.GROUND.objId;
-  //   pacman.y = pacman.y - 1;
-  //   gameData[pacman.y][pacman.x] = GAME_PIECES.PACMAN.objId;
-  // }
-
   let newY = pacman.y-1;
   let newX = pacman.x;
   let oldY = pacman.y;
@@ -235,11 +229,6 @@ function moveUp() {
 
 function moveLeft() {
   pacman.direction = 'left';
-  // if (gameData[pacman.y][pacman.x-1] !== GAME_PIECES.WALL.objId) {
-  //   gameData[pacman.y][pacman.x] = GAME_PIECES.GROUND.objId;
-  //   pacman.x = pacman.x - 1 ;
-  //   gameData[pacman.y][pacman.x] = GAME_PIECES.PACMAN.objId;
-  // }
   let newY = pacman.y;
   let newX = pacman.x-1;
   let oldY = pacman.y;
@@ -259,11 +248,6 @@ function moveLeft() {
 
 function moveRight() {
   pacman.direction = 'right';
-  // if (gameData[pacman.y][pacman.x+1] !== GAME_PIECES.WALL.objId) {
-  //   gameData[pacman.y][pacman.x] = GAME_PIECES.GROUND.objId;
-  //   pacman.x = pacman.x + 1 ;
-  //   gameData[pacman.y][pacman.x] = GAME_PIECES.PACMAN.objId;
-  // }
   let newY = pacman.y;
   let newX = pacman.x+1;
   let oldY = pacman.y;
