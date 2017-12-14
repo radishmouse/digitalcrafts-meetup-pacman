@@ -82,6 +82,10 @@ Most web pages are built using these three technologies: HTML, CSS, and JavaScri
   - As you click, tap, scroll, and type, your browser responds. Each of these interactions is called an event.
   - You can customize how the browser responds by writing functions that handle different kinds of events.
 
+# For the more curious: requestAnimationFrame
+
+If you were to add more complexity (ghosts, time limits, etc.), you should check out the requestAnimationFrame API. [An excellent introduction is here.](https://css-tricks.com/using-requestanimationframe/)
+
 # Some handy keyboard shortcuts in vs code:
 
 - move line up/down: `opt + up/down`
