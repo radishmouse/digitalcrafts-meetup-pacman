@@ -118,7 +118,9 @@ function drawMap() {
 
 // This function removes the map element from the page.
 function eraseMap() {
-  document.body.removeChild(map);
+  if (map) {
+    document.body.removeChild(map);
+  }
 }
 
 //-------------------------------------------------------------
@@ -173,7 +175,7 @@ function moveRight() {
 // that handles that key press.
 function setupKeyboardControls() {
   document.addEventListener('keydown', function (e) {
-
+    console.log(e.keyCode);
     // As far as the browser is concerned, each key on the keyboard
     // is associated with a numeric value.
     // After some experimenting, you can discover which numeric values
@@ -193,23 +195,28 @@ function setupKeyboardControls() {
     } else if (e.keyCode === 40){   // down arrow is 40
       moveDown();
     }
-
-    // After every move, we erase the map and redraw it.
-    eraseMap();
-    drawMap();
   });
 }
 
 //-------------------------------------------------------------
 // Main game setup function
 //-------------------------------------------------------------
-function main() {
+let GAME_LOOP;
+function setup() {
   // Initialize the game by drawing the map and setting up the
   // keyboard controls.
-  drawMap();
   setupKeyboardControls();
+  render();
 }
+
+function render() {
+  eraseMap();
+  drawMap();
+  // updateEnemies();
+  GAME_LOOP = requestAnimationFrame(render);
+}
+
 
 // Finally, after we define all of our functions, we need to start
 // the game.
-main();
+setup();
