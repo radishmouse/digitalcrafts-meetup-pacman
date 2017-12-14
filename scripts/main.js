@@ -10,13 +10,13 @@ let GAME_LOOP;
 // It uses numbers to represent walls, coins, empty space, and pacman.
 let gameData = [
   [1,1,1,1,1,1,1,1,1,1,1,1,1],
-  [1,4,2,2,2,2,1,2,2,2,2,4,1],
+  [1,2,2,2,2,2,1,2,2,2,2,2,1],
   [1,2,1,1,1,2,1,2,1,1,1,2,1],
   [1,2,1,2,2,2,2,2,2,2,1,2,1],
   [1,2,2,2,1,1,3,1,1,2,2,2,1],
   [1,2,1,2,2,2,2,2,2,2,1,2,1],
   [1,2,1,1,2,2,1,2,2,1,1,2,1],
-  [1,4,2,2,2,2,1,2,2,2,2,4,1],
+  [1,2,2,2,2,2,1,2,2,2,2,2,1],
   [1,1,1,1,1,1,1,1,1,1,1,1,1]
 ];
 
@@ -74,6 +74,9 @@ let pacman = {
   direction: 'right'
 };
 
+function placeObj(id, x, y) {
+  gameData[y][x] = id;
+}
 
 //-------------------------------------------------------------
 // Game map creation functions
@@ -170,13 +173,13 @@ function isWall(x, y) {
 }
 
 function updateGameData(data, character, oldX, oldY, newX, newY, objId1, objId2) {
-  data[oldY][oldX] = objId1;
+  placeObj(objId1, oldX, oldY);
 
   // The following 3 lines are kinda redundant...
   // Why am I keeping up with them separately?
   character.y = newY;
   character.x = newX;
-  data[newY][newX] = objId2;
+  placeObj(objId2, character.x, character.y);
 
 }
 
@@ -304,12 +307,14 @@ function setup() {
   // Initialize the game by drawing the map and setting up the
   // keyboard controls.
   setupKeyboardControls();
+
+  // place pacman initially
   updateGameData(gameData,
     pacman,
-    6,
-    4,
-    6,
-    4,
+    pacman.x,
+    pacman.y,
+    pacman.x,
+    pacman.y,
     GAME_PIECES.PACMAN.objId,
     GAME_PIECES.PACMAN.objId);
   render();
