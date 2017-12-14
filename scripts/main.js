@@ -13,7 +13,7 @@ let gameData = [
   [1,4,2,2,2,2,1,2,2,2,2,4,1],
   [1,2,1,1,1,2,1,2,1,1,1,2,1],
   [1,2,1,2,2,2,2,2,2,2,1,2,1],
-  [1,2,2,2,1,1,5,1,1,2,2,2,1],
+  [1,2,2,2,1,1,3,1,1,2,2,2,1],
   [1,2,1,2,2,2,2,2,2,2,1,2,1],
   [1,2,1,1,2,2,1,2,2,1,1,2,1],
   [1,4,2,2,2,2,1,2,2,2,2,4,1],
@@ -180,6 +180,8 @@ function updateGameData(data, character, oldX, oldY, newX, newY, objId1, objId2)
 
 }
 
+
+
 // Each function does the following:
 // - set pacman's direction so that we show the correct image
 // - check to see if we hit a wall
@@ -219,7 +221,6 @@ function moveUp() {
   let newX = pacman.x;
   let oldY = pacman.y;
   let oldX = pacman.x;
-  console.log('yes, you are trying to move up');
   if (!isWall(newX, newY)) {
     updateGameData(gameData,
                    pacman,
@@ -319,6 +320,14 @@ function setup() {
   // Initialize the game by drawing the map and setting up the
   // keyboard controls.
   setupKeyboardControls();
+  updateGameData(gameData,
+    pacman,
+    6,
+    4,
+    6,
+    4,
+    GAME_PIECES.PACMAN.objId,
+    GAME_PIECES.PACMAN.objId);
   render();
 }
 
