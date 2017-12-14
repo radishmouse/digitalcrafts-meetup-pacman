@@ -2,17 +2,21 @@
 // Game configuration data
 //-------------------------------------------------------------
 
+// This is the variable that holds our game loop, should we need
+// to ever end it (an endgame scenario, for example).
+let GAME_LOOP;
+
 // This is a numerical representation of the pacman game.
 // It uses numbers to represent walls, coins, empty space, and pacman.
 let gameData = [
   [1,1,1,1,1,1,1,1,1,1,1,1,1],
-  [1,2,2,2,2,2,1,2,2,2,2,2,1],
+  [1,4,2,2,2,2,1,2,2,2,2,4,1],
   [1,2,1,1,1,2,1,2,1,1,1,2,1],
   [1,2,1,2,2,2,2,2,2,2,1,2,1],
   [1,2,2,2,1,1,5,1,1,2,2,2,1],
   [1,2,1,2,2,2,2,2,2,2,1,2,1],
   [1,2,1,1,2,2,1,2,2,1,1,2,1],
-  [1,2,2,2,2,2,1,2,2,2,2,2,1],
+  [1,4,2,2,2,2,1,2,2,2,2,4,1],
   [1,1,1,1,1,1,1,1,1,1,1,1,1]
 ];
 
@@ -23,10 +27,37 @@ let gameData = [
 
 // In our code below, we want to be able to refer to names of things,
 // and not numbers. To make that possible, we set up a few labels.
-const WALL   = 1;
-const COIN   = 2;
-const GROUND = 3;
-const PACMAN = 5;
+// We'll keep these labels in an object, along with the CSS class names
+//
+const GAME_PIECES = {
+  WALL: {
+    objId: 1,
+    className: 'wall'
+  },
+  COIN: {
+    objId: 2,
+    className: 'coin'
+  },
+  GROUND: {
+    objId: 3,
+    className: 'ground'
+  },
+  GHOST: {
+    objId: 4,
+    className: 'ghost'
+  },
+  PACMAN: {
+    objId: 5,
+    className: 'pacman'
+  },
+}
+
+const KEYS = {
+  LEFT: 37,
+  UP: 38,
+  RIGHT: 39,
+  DOWN: 40
+}
 
 
 // We will use the identifier "map" to refer to the game map.
@@ -67,22 +98,28 @@ function createTiles(data) {
 
       // Now, depending on the numerical value,
       // we need to add a more specific class.
-      if (col === WALL) {
-        tile.classList.add('wall');
+      switch(col) {
+        case GAME_PIECES.WALL.objId:
+          tile.classList.add(GAME_PIECES.WALL.className);
+          break;
+        case GAME_PIECES.GROUND.objId:
+          tile.classList.add(GAME_PIECES.GROUND.className);
+          break;
+        case GAME_PIECES.COIN.objId:
+          tile.classList.add(GAME_PIECES.COIN.className);
+          break;
+        case GAME_PIECES.GHOST.objId:
+          tile.classList.add(GAME_PIECES.GHOST.className);
+          break;
+        case GAME_PIECES.PACMAN.objId:
+          tile.classList.add(GAME_PIECES.PACMAN.className);
 
-      } else if (col === COIN) {
-        tile.classList.add('coin');
-
-      } else if (col === GROUND) {
-        tile.classList.add('ground');
-
-      } else if (col === PACMAN) {
-        tile.classList.add('pacman');
-
-        // For Pacman, we will add yet another
-        // class for the direction pacman is facing.
-        tile.classList.add(pacman.direction);
-
+          // For Pacman, we will add yet another
+          // class for the direction pacman is facing.
+          tile.classList.add(pacman.direction);
+          break;
+        default:
+          break;
       }
 
       // Now that our individual tile is configured,
@@ -127,6 +164,22 @@ function eraseMap() {
 // Movement functions
 //-------------------------------------------------------------
 
+function isWall(x, y) {
+  // Oy, we have to check [y] then [x]
+  return gameData[y][x] === GAME_PIECES.WALL.objId;
+}
+
+function updateGameData(data, character, oldX, oldY, newX, newY, objId1, objId2) {
+  data[oldY][oldX] = objId1;
+
+  // The following 3 lines are kinda redundant...
+  // Why am I keeping up with them separately?
+  character.y = newY;
+  character.x = newX;
+  data[newY][newX] = objId2;
+
+}
+
 // Each function does the following:
 // - set pacman's direction so that we show the correct image
 // - check to see if we hit a wall
@@ -136,37 +189,94 @@ function eraseMap() {
 
 function moveDown() {
   pacman.direction = 'down';
-  if (gameData[pacman.y+1][pacman.x] !== WALL) {
-    gameData[pacman.y][pacman.x] = GROUND;
-    pacman.y = pacman.y + 1 ;
-    gameData[pacman.y][pacman.x] = PACMAN;
+
+  let newY = pacman.y+1;
+  let newX = pacman.x;
+  let oldY = pacman.y;
+  let oldX = pacman.x;
+
+  if (!isWall(newX, newY)) {
+    updateGameData(gameData,
+                   pacman,
+                   oldX,
+                   oldY,
+                   newX,
+                   newY,
+                   GAME_PIECES.GROUND.objId,
+                   GAME_PIECES.PACMAN.objId);
   }
 }
 
 function moveUp() {
   pacman.direction = 'up';
-  if (gameData[pacman.y-1][pacman.x] !== WALL) {
-    gameData[pacman.y][pacman.x] = GROUND;
-    pacman.y = pacman.y - 1;
-    gameData[pacman.y][pacman.x] = PACMAN;
+  // if (gameData[pacman.y-1][pacman.x] !== GAME_PIECES.WALL.objId) {
+  //   gameData[pacman.y][pacman.x] = GAME_PIECES.GROUND.objId;
+  //   pacman.y = pacman.y - 1;
+  //   gameData[pacman.y][pacman.x] = GAME_PIECES.PACMAN.objId;
+  // }
+
+  let newY = pacman.y-1;
+  let newX = pacman.x;
+  let oldY = pacman.y;
+  let oldX = pacman.x;
+  console.log('yes, you are trying to move up');
+  if (!isWall(newX, newY)) {
+    updateGameData(gameData,
+                   pacman,
+                   oldX,
+                   oldY,
+                   newX,
+                   newY,
+                   GAME_PIECES.GROUND.objId,
+                   GAME_PIECES.PACMAN.objId);
   }
 }
 
 function moveLeft() {
   pacman.direction = 'left';
-  if (gameData[pacman.y][pacman.x-1] !== WALL) {
-    gameData[pacman.y][pacman.x] = GROUND;
-    pacman.x = pacman.x - 1 ;
-    gameData[pacman.y][pacman.x] = PACMAN;
+  // if (gameData[pacman.y][pacman.x-1] !== GAME_PIECES.WALL.objId) {
+  //   gameData[pacman.y][pacman.x] = GAME_PIECES.GROUND.objId;
+  //   pacman.x = pacman.x - 1 ;
+  //   gameData[pacman.y][pacman.x] = GAME_PIECES.PACMAN.objId;
+  // }
+  let newY = pacman.y;
+  let newX = pacman.x-1;
+  let oldY = pacman.y;
+  let oldX = pacman.x;
+
+  if (!isWall(newX, newY)) {
+    updateGameData(gameData,
+                   pacman,
+                   oldX,
+                   oldY,
+                   newX,
+                   newY,
+                   GAME_PIECES.GROUND.objId,
+                   GAME_PIECES.PACMAN.objId);
   }
 }
 
 function moveRight() {
   pacman.direction = 'right';
-  if (gameData[pacman.y][pacman.x+1] !== WALL) {
-    gameData[pacman.y][pacman.x] = GROUND;
-    pacman.x = pacman.x + 1 ;
-    gameData[pacman.y][pacman.x] = PACMAN;
+  // if (gameData[pacman.y][pacman.x+1] !== GAME_PIECES.WALL.objId) {
+  //   gameData[pacman.y][pacman.x] = GAME_PIECES.GROUND.objId;
+  //   pacman.x = pacman.x + 1 ;
+  //   gameData[pacman.y][pacman.x] = GAME_PIECES.PACMAN.objId;
+  // }
+  let newY = pacman.y;
+  let newX = pacman.x+1;
+  let oldY = pacman.y;
+  let oldX = pacman.x;
+
+  if (!isWall(newX, newY)) {
+    updateGameData(gameData,
+                   pacman,
+                   oldX,
+                   oldY,
+                   newX,
+                   newY,
+                   GAME_PIECES.GROUND.objId,
+                   GAME_PIECES.PACMAN.objId);
   }
 }
 
@@ -175,7 +285,7 @@ function moveRight() {
 // that handles that key press.
 function setupKeyboardControls() {
   document.addEventListener('keydown', function (e) {
-    console.log(e.keyCode);
+
     // As far as the browser is concerned, each key on the keyboard
     // is associated with a numeric value.
     // After some experimenting, you can discover which numeric values
@@ -183,17 +293,20 @@ function setupKeyboardControls() {
 
     // Each time the user moves, we recalculate Pacman's location,
     // update the
-    if (e.keyCode === 37) {         // left arrow is 37
+    if (e.key === "Meta") {
+      return;
+    } else if (e.keyCode === KEYS.LEFT) {   // left arrow is 37
       moveLeft();
-
-    } else if (e.keyCode === 38) {  // up arrow is 38
+      e.preventDefault();
+    } else if (e.keyCode === KEYS.UP) {     // up arrow is 38
       moveUp();
-
-    } else if (e.keyCode === 39){   // right arrow is 39
+      e.preventDefault();
+    } else if (e.keyCode === KEYS.RIGHT){   // right arrow is 39
       moveRight();
-
-    } else if (e.keyCode === 40){   // down arrow is 40
+      e.preventDefault();
+    } else if (e.keyCode === KEYS.DOWN){    // down arrow is 40
       moveDown();
+      e.preventDefault();
     }
   });
 }
@@ -201,7 +314,7 @@ function setupKeyboardControls() {
 //-------------------------------------------------------------
 // Main game setup function
 //-------------------------------------------------------------
-let GAME_LOOP;
+
 function setup() {
   // Initialize the game by drawing the map and setting up the
   // keyboard controls.
