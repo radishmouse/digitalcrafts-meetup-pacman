@@ -410,7 +410,9 @@ function render() {
 
 function hasStuffLeftToEat() {
   return gameData.reduce((arr, a) => arr.concat(a), [])
-                 .filter((item) => [2, 4, 6].includes(item))
+                 .filter((item) => [GAME_PIECES.COIN.objId,
+                                    GAME_PIECES.GHOST.objId,
+                                    GAME_PIECES.POWERUP.objId].includes(item))
                  .length > 0;
 }
 
