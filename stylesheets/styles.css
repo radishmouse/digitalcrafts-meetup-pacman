@@ -12,17 +12,30 @@ html {
   box-sizing: inherit;
 }
 
+/*-----------------------------------------------------------*/
+/* Basics                                                    */
+/*-----------------------------------------------------------*/
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
 
 /*-----------------------------------------------------------*/
 /* We want the page to be black and our game board centered. */
 /*-----------------------------------------------------------*/
 body {
   background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 body > div {
-  margin: 120px auto;
-  text-align: center;
+  height: 450px;
+  width: 650px;
+  /* margin: 120px auto; */
+  /* text-align: center; */
 }
 
 
