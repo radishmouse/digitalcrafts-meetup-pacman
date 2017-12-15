@@ -56,6 +56,25 @@ body > div {
   text-align: right;
 }
 
+#yay {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-40%) scale(0.00001);
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 14em;
+  font-family: 'Press Start 2P', cursive;
+  color: yellow;
+  opacity: 0;
+  transition: all 1s ease-out;
+}
+
+#yay.win {
+  opacity: 1;
+  transform: translateY(-20%) scale(1.25);
+}
+
 
 /*-----------------------------------------------------------*/
 /* Every game tile should be 50px by 50px and sitting next   */

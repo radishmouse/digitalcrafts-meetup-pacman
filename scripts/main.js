@@ -404,6 +404,10 @@ function render() {
   GAME_LOOP = requestAnimationFrame(render);
 }
 
+function winGame() {
+  cancelAnimationFrame(GAME_LOOP);
+  document.querySelector('#yay').classList.add('win');
+}
 
 function endGame() {
   console.log('game over');
