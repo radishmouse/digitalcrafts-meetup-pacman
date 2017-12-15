@@ -7,6 +7,8 @@
 let GAME_LOOP;
 let score = 0;
 const HOW_MANY_GHOSTS = 3;
+const POWERUP_DURATION = 10;
+
 
 // This is a numerical representation of the pacman game.
 // It uses numbers to represent walls, coins, empty space, and pacman.
@@ -79,6 +81,7 @@ let pacman = {
   y: 4,
   direction: 'right',
   powerUp: false,
+  powerUpStart: 0,
 };
 
 // This will be an array of objects
@@ -272,6 +275,7 @@ function movePacman(isWall, isGhost, isCoin, isPowerup, newX, newY) {
       } else if (isPowerup) {
         score = score + 25;
         pacman.powerUp = true;
+        pacman.powerUpStart = (new Date()).getTime();
       }
       updateGameData(pacman,
                     newX,
@@ -369,6 +373,7 @@ function setupKeyboardControls() {
 // Main game setup function
 //-------------------------------------------------------------
 
+
 function setup() {
   // Initialize the game by drawing the map and setting up the
   // keyboard controls.
@@ -383,7 +388,16 @@ function setup() {
 function render() {
   eraseMap();
   drawMap();
-  // updateEnemies();
+
+  if (pacman.powerUp) {
+    // see if we're inside the powerup time
+    if (isTimeWithin(pacman.powerUpStart, (new Date()).getTime(), POWERUP_DURATION)) {
+      console.log('we are within the timeframe!');
+    } else {
+      pacman.powerUp = false;
+    }
+  }
+
   GAME_LOOP = requestAnimationFrame(render);
 }
 
@@ -408,4 +422,8 @@ function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+}
+
+function isTimeWithin(timestamp, start, duration) {
+  return (start - timestamp) < (duration * 1000);
 }
