@@ -100,3 +100,22 @@ body > div {
 .ghost {
   background-image: url('../images/ghost.png');
 }
+
+.dead {
+  animation: wompwomp 2s infinite linear;
+}
+
+
+@keyframes wompwomp {
+  from {
+    transform: rotate(0deg) scale(0.8);
+  }
+
+  50% {
+    transform: rotate(180deg) scale(0.5);
+  }
+
+  to {
+    transform: rotate(360deg) scale(0.001);
+  }
+}

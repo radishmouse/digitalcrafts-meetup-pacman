@@ -75,9 +75,8 @@ let pacman = {
   direction: 'right'
 };
 
-function placeObj(id, x, y) {
-  gameData[y][x] = id;
-}
+// This will be an array of objects
+let ghosts = [];
 
 
 //-------------------------------------------------------------
@@ -169,6 +168,12 @@ function eraseMap() {
 // Movement functions
 //-------------------------------------------------------------
 
+
+function placeObj(id, x, y) {
+  gameData[y][x] = id;
+}
+
+
 function isPiece(x, y, id) {
   // Oy, we have to check [y] then [x]
   return gameData[y][x] === id;
@@ -212,6 +217,7 @@ function placeGhosts(howMany) {
   while (numGhosts < howMany) {
     let idx = getRandomInt(0, coinCoords.length);
     let coord = coinCoords.splice(idx, 1)[0];
+    ghosts.push(coord);
     console.log('placing ghost at ' + coord);
     placeObj(GAME_PIECES.GHOST.objId, coord[0], coord[1]);
     numGhosts++;
@@ -232,6 +238,12 @@ function updateGameData(data, character, oldX, oldY, newX, newY, objId1, objId2)
 
 
 
+// Ghosts move without nabbing coins
+// or changing the ground
+// whatever was there, the ghost leaves it there.
+
+
+
 // Each function does the following:
 // - set pacman's direction so that we show the correct image
 // - check to see if we hit a wall
@@ -248,14 +260,18 @@ function moveDown() {
   let oldX = pacman.x;
 
   if (!isWall(newX, newY)) {
-    updateGameData(gameData,
-                   pacman,
-                   oldX,
-                   oldY,
-                   newX,
-                   newY,
-                   GAME_PIECES.GROUND.objId,
-                   GAME_PIECES.PACMAN.objId);
+    if (isGhost(newX, newY)){
+      endGame();
+    } else {
+      updateGameData(gameData,
+                     pacman,
+                     oldX,
+                     oldY,
+                     newX,
+                     newY,
+                     GAME_PIECES.GROUND.objId,
+                     GAME_PIECES.PACMAN.objId);
+    }
   }
 }
 
@@ -266,14 +282,18 @@ function moveUp() {
   let oldY = pacman.y;
   let oldX = pacman.x;
   if (!isWall(newX, newY)) {
-    updateGameData(gameData,
-                   pacman,
-                   oldX,
-                   oldY,
-                   newX,
-                   newY,
-                   GAME_PIECES.GROUND.objId,
-                   GAME_PIECES.PACMAN.objId);
+    if (isGhost(newX, newY)){
+      endGame();
+    } else {
+      updateGameData(gameData,
+                    pacman,
+                    oldX,
+                    oldY,
+                    newX,
+                    newY,
+                    GAME_PIECES.GROUND.objId,
+                    GAME_PIECES.PACMAN.objId);
+    }
   }
 }
 
@@ -285,14 +305,18 @@ function moveLeft() {
   let oldX = pacman.x;
 
   if (!isWall(newX, newY)) {
-    updateGameData(gameData,
-                   pacman,
-                   oldX,
-                   oldY,
-                   newX,
-                   newY,
-                   GAME_PIECES.GROUND.objId,
-                   GAME_PIECES.PACMAN.objId);
+    if (isGhost(newX, newY)){
+      endGame();
+    } else {
+      updateGameData(gameData,
+                    pacman,
+                    oldX,
+                    oldY,
+                    newX,
+                    newY,
+                    GAME_PIECES.GROUND.objId,
+                    GAME_PIECES.PACMAN.objId);
+    }
   }
 }
 
@@ -304,14 +328,18 @@ function moveRight() {
   let oldX = pacman.x;
 
   if (!isWall(newX, newY)) {
-    updateGameData(gameData,
-                   pacman,
-                   oldX,
-                   oldY,
-                   newX,
-                   newY,
-                   GAME_PIECES.GROUND.objId,
-                   GAME_PIECES.PACMAN.objId);
+    if (isGhost(newX, newY)){
+      endGame();
+    } else {
+      updateGameData(gameData,
+                    pacman,
+                    oldX,
+                    oldY,
+                    newX,
+                    newY,
+                    GAME_PIECES.GROUND.objId,
+                    GAME_PIECES.PACMAN.objId);
+    }
   }
 }
 
@@ -366,6 +394,14 @@ function render() {
   GAME_LOOP = requestAnimationFrame(render);
 }
 
+
+function endGame() {
+  console.log('game over');
+  cancelAnimationFrame(GAME_LOOP);
+  pacman.direction = 'dead';
+  eraseMap();
+  drawMap();
+}
 
 // Finally, after we define all of our functions, we need to start
 // the game.
