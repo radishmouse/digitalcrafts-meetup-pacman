@@ -389,6 +389,9 @@ function render() {
   eraseMap();
   drawMap();
 
+  let scoreBoard = document.querySelector('#score');
+  scoreBoard.innerHTML = `${score} pts`;
+
   if (pacman.powerUp) {
     // see if we're inside the powerup time
     if (isTimeWithin(pacman.powerUpStart, (new Date()).getTime(), POWERUP_DURATION)) {

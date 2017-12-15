@@ -29,6 +29,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  min-width: 850px;
+  padding-top: 50px;
 }
 
 body > div {
@@ -36,6 +38,22 @@ body > div {
   width: 650px;
   /* margin: 120px auto; */
   /* text-align: center; */
+}
+
+#header {
+  position: absolute;
+  top: 20px;
+  left: 10px;
+  width: 98%;
+  font-size: 1em;
+  font-family: 'Press Start 2P', cursive;
+  color: white;
+  /* border: 1px solid #f00; */
+}
+
+#score {
+  /* border: 1px solid #f00; */
+  text-align: right;
 }
 
 
