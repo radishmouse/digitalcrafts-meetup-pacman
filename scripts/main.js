@@ -7,7 +7,7 @@
 let GAME_LOOP;
 let score = 0;
 const HOW_MANY_GHOSTS = 3;
-const POWERUP_DURATION = 10;
+const POWERUP_DURATION = 4;
 
 
 // This is a numerical representation of the pacman game.
