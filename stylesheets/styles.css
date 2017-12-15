@@ -97,6 +97,26 @@ body > div {
   background-image: url('../images/mizpacman-down.png');
 }
 
+.powerup-right {
+  /* Image urls are relative to the stylesheet.      */
+  /* The '../images' means: "go to the parent folder */
+  /* then look inside the images folder.             */
+  background-image: url('../images/mizpacman-powerup.png');
+}
+
+.powerup-left {
+  background-image: url('../images/mizpacman-powerup-left.png');
+}
+
+.powerup-up {
+  background-image: url('../images/mizpacman-powerup-up.png');
+}
+
+.powerup-down {
+  background-image: url('../images/mizpacman-powerup-down.png');
+}
+
+
 .ghost {
   background-image: url('../images/ghost.png');
 }

@@ -5,6 +5,7 @@
 // This is the variable that holds our game loop, should we need
 // to ever end it (an endgame scenario, for example).
 let GAME_LOOP;
+let score = 0;
 const HOW_MANY_GHOSTS = 3;
 
 // This is a numerical representation of the pacman game.
@@ -72,7 +73,8 @@ let map;
 let pacman = {
   x: 6,
   y: 4,
-  direction: 'right'
+  direction: 'right',
+  powerUp: true,
 };
 
 // This will be an array of objects
@@ -121,6 +123,10 @@ function createTiles(data) {
           // For Pacman, we will add yet another
           // class for the direction pacman is facing.
           tile.classList.add(pacman.direction);
+
+          if (pacman.powerUp) {
+            tile.classList.add(`powerup-${pacman.direction}`);
+          }
           break;
         default:
           break;
@@ -225,8 +231,8 @@ function placeGhosts(howMany) {
 
 }
 
-function updateGameData(data, character, oldX, oldY, newX, newY, objId1, objId2) {
-  placeObj(objId1, oldX, oldY);
+function updateGameData(character, newX, newY, objId1, objId2) {
+  placeObj(objId1, character.x, character.y);
 
   // The following 3 lines are kinda redundant...
   // Why am I keeping up with them separately?
@@ -242,7 +248,25 @@ function updateGameData(data, character, oldX, oldY, newX, newY, objId1, objId2)
 // or changing the ground
 // whatever was there, the ghost leaves it there.
 
+function movePacman(isWall, isGhost, isCoin, newX, newY) {
+  if (!isWall) {
+    if (!pacman.powerUp && isGhost){
+      endGame();
+    } else {
 
+      if (isGhost) {
+        score = score + 50;
+      } else if (isCoin) {
+        score = score + 10;
+      }
+      updateGameData(pacman,
+                    newX,
+                    newY,
+                    GAME_PIECES.GROUND.objId,
+                    GAME_PIECES.PACMAN.objId);
+    }
+  }
+}
 
 // Each function does the following:
 // - set pacman's direction so that we show the correct image
@@ -253,94 +277,48 @@ function updateGameData(data, character, oldX, oldY, newX, newY, objId1, objId2)
 
 function moveDown() {
   pacman.direction = 'down';
-
   let newY = pacman.y+1;
   let newX = pacman.x;
-  let oldY = pacman.y;
-  let oldX = pacman.x;
+  let isWallNext = isWall(newX, newY);
+  let isGhostNext = isGhost(newX, newY);
+  let isCoinNext = isCoin(newX, newY);
 
-  if (!isWall(newX, newY)) {
-    if (isGhost(newX, newY)){
-      endGame();
-    } else {
-      updateGameData(gameData,
-                     pacman,
-                     oldX,
-                     oldY,
-                     newX,
-                     newY,
-                     GAME_PIECES.GROUND.objId,
-                     GAME_PIECES.PACMAN.objId);
-    }
-  }
+  movePacman(isWallNext, isGhostNext, isCoinNext, newX, newY);
 }
 
 function moveUp() {
   pacman.direction = 'up';
   let newY = pacman.y-1;
   let newX = pacman.x;
-  let oldY = pacman.y;
-  let oldX = pacman.x;
-  if (!isWall(newX, newY)) {
-    if (isGhost(newX, newY)){
-      endGame();
-    } else {
-      updateGameData(gameData,
-                    pacman,
-                    oldX,
-                    oldY,
-                    newX,
-                    newY,
-                    GAME_PIECES.GROUND.objId,
-                    GAME_PIECES.PACMAN.objId);
-    }
-  }
+  let isWallNext = isWall(newX, newY);
+  let isGhostNext = isGhost(newX, newY);
+  let isCoinNext = isCoin(newX, newY);
+
+  movePacman(isWallNext, isGhostNext, isCoinNext, newX, newY);
 }
 
 function moveLeft() {
   pacman.direction = 'left';
   let newY = pacman.y;
   let newX = pacman.x-1;
-  let oldY = pacman.y;
-  let oldX = pacman.x;
+  let isWallNext = isWall(newX, newY);
+  let isGhostNext = isGhost(newX, newY);
+  let isCoinNext = isCoin(newX, newY);
 
-  if (!isWall(newX, newY)) {
-    if (isGhost(newX, newY)){
-      endGame();
-    } else {
-      updateGameData(gameData,
-                    pacman,
-                    oldX,
-                    oldY,
-                    newX,
-                    newY,
-                    GAME_PIECES.GROUND.objId,
-                    GAME_PIECES.PACMAN.objId);
-    }
-  }
+  movePacman(isWallNext, isGhostNext, isCoinNext, newX, newY);
+
 }
 
 function moveRight() {
   pacman.direction = 'right';
   let newY = pacman.y;
   let newX = pacman.x+1;
-  let oldY = pacman.y;
-  let oldX = pacman.x;
+  let isWallNext = isWall(newX, newY);
+  let isGhostNext = isGhost(newX, newY);
+  let isCoinNext = isCoin(newX, newY);
 
-  if (!isWall(newX, newY)) {
-    if (isGhost(newX, newY)){
-      endGame();
-    } else {
-      updateGameData(gameData,
-                    pacman,
-                    oldX,
-                    oldY,
-                    newX,
-                    newY,
-                    GAME_PIECES.GROUND.objId,
-                    GAME_PIECES.PACMAN.objId);
-    }
-  }
+  movePacman(isWallNext, isGhostNext, isCoinNext, newX, newY);
+
 }
 
 // This function sets up the listener for the whole page.
