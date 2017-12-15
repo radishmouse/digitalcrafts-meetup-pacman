@@ -112,10 +112,10 @@ body > div {
   }
 
   50% {
-    transform: rotate(180deg) scale(0.5);
+    transform: rotate(360deg) scale(0.5);
   }
 
   to {
-    transform: rotate(360deg) scale(0.001);
+    transform: rotate(720deg) scale(0.001);
   }
 }
