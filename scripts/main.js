@@ -78,6 +78,7 @@ function placeObj(id, x, y) {
   gameData[y][x] = id;
 }
 
+
 //-------------------------------------------------------------
 // Game map creation functions
 //-------------------------------------------------------------
@@ -167,9 +168,54 @@ function eraseMap() {
 // Movement functions
 //-------------------------------------------------------------
 
-function isWall(x, y) {
+function isPiece(x, y, id) {
   // Oy, we have to check [y] then [x]
-  return gameData[y][x] === GAME_PIECES.WALL.objId;
+  return gameData[y][x] === id;
+
+}
+
+function isWall(x, y) {
+  return isPiece(x, y, GAME_PIECES.WALL.objId);
+}
+
+function isGhost(x, y) {
+  return isPiece(x, y, GAME_PIECES.GHOST.objId);
+}
+
+function isCoin(x, y) {
+  return isPiece(x, y, GAME_PIECES.COIN.objId);
+}
+
+function findCoinCoords() {
+  let coins = [];
+  let rowCount = 0;
+  for (let row of gameData) {
+    let colCount = 0;
+    for (let col of row) {
+      if (isCoin(colCount, rowCount)) {
+        console.log(`found a coin at ${rowCount} and ${colCount}`);
+
+        coins.push([colCount, rowCount]);
+      }
+      colCount++;
+    }
+    rowCount++;
+  }
+  console.log(coins);
+  return coins;
+}
+
+function placeGhosts(howMany) {
+  var coinCoords = findCoinCoords();
+  var numGhosts = 0;
+  while (numGhosts < howMany) {
+    let idx = getRandomInt(0, coinCoords.length);
+    let coord = coinCoords.splice(idx, 1)[0];
+    console.log('placing ghost at ' + coord);
+    placeObj(GAME_PIECES.GHOST.objId, coord[0], coord[1]);
+    numGhosts++;
+  }
+
 }
 
 function updateGameData(data, character, oldX, oldY, newX, newY, objId1, objId2) {
@@ -322,3 +368,13 @@ function render() {
 // Finally, after we define all of our functions, we need to start
 // the game.
 setup();
+
+
+//-------------------------------------------------------------
+// Utils
+//-------------------------------------------------------------
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+}
