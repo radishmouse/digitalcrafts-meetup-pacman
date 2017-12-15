@@ -72,7 +72,7 @@ body > div {
 
 #yay.win {
   opacity: 1;
-  transform: translateY(-20%) scale(1.25);
+  transform: translateY(-20%) scale(1.0);
 }
 
 

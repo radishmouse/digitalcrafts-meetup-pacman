@@ -401,7 +401,17 @@ function render() {
     }
   }
 
-  GAME_LOOP = requestAnimationFrame(render);
+  if (hasStuffLeftToEat()) {
+    GAME_LOOP = requestAnimationFrame(render);
+  } else {
+    winGame();
+  }
+}
+
+function hasStuffLeftToEat() {
+  return gameData.reduce((arr, a) => arr.concat(a), [])
+                 .filter((item) => [2, 4, 6].includes(item))
+                 .length > 0;
 }
 
 function winGame() {
