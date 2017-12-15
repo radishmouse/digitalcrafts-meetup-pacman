@@ -5,6 +5,7 @@
 // This is the variable that holds our game loop, should we need
 // to ever end it (an endgame scenario, for example).
 let GAME_LOOP;
+const HOW_MANY_GHOSTS = 3;
 
 // This is a numerical representation of the pacman game.
 // It uses numbers to represent walls, coins, empty space, and pacman.
@@ -351,9 +352,10 @@ function setup() {
   // Initialize the game by drawing the map and setting up the
   // keyboard controls.
   setupKeyboardControls();
-
+  placeGhosts(HOW_MANY_GHOSTS);
   // place pacman initially
   placeObj(GAME_PIECES.PACMAN.objId, pacman.x, pacman.y);
+
   render();
 }
 

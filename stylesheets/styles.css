@@ -85,7 +85,5 @@ body > div {
 }
 
 .ghost {
-  background-color: red;
-  border-radius: 50%;
-  transform: scale(0.3);
+  background-image: url('../images/ghost.png');
 }
