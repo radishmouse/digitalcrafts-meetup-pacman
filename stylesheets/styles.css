@@ -73,6 +73,12 @@ body > div {
   transform: scale(0.3);
 }
 
+.powerup {
+  background-color: orange;
+  border-radius: 50%;
+  transform: scale(0.5);
+}
+
 
 /*-----------------------------------------------------------*/
 /* We make pacman appear to face different directions by     */

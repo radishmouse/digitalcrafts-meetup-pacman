@@ -12,13 +12,13 @@ const HOW_MANY_GHOSTS = 3;
 // It uses numbers to represent walls, coins, empty space, and pacman.
 let gameData = [
   [1,1,1,1,1,1,1,1,1,1,1,1,1],
-  [1,2,2,2,2,2,1,2,2,2,2,2,1],
+  [1,6,2,2,2,2,1,2,2,2,2,6,1],
   [1,2,1,1,1,2,1,2,1,1,1,2,1],
   [1,2,1,2,2,2,2,2,2,2,1,2,1],
   [1,2,2,2,1,1,3,1,1,2,2,2,1],
   [1,2,1,2,2,2,2,2,2,2,1,2,1],
   [1,2,1,1,2,2,1,2,2,1,1,2,1],
-  [1,2,2,2,2,2,1,2,2,2,2,2,1],
+  [1,6,2,2,2,2,1,2,2,2,2,6,1],
   [1,1,1,1,1,1,1,1,1,1,1,1,1]
 ];
 
@@ -52,6 +52,10 @@ const GAME_PIECES = {
     objId: 5,
     className: 'pacman'
   },
+  POWERUP: {
+    objId: 6,
+    className: 'powerup'
+  },
 }
 
 const KEYS = {
@@ -74,7 +78,7 @@ let pacman = {
   x: 6,
   y: 4,
   direction: 'right',
-  powerUp: true,
+  powerUp: false,
 };
 
 // This will be an array of objects
@@ -117,7 +121,7 @@ function createTiles(data) {
         case GAME_PIECES.GHOST.objId:
           tile.classList.add(GAME_PIECES.GHOST.className);
           break;
-        case GAME_PIECES.PACMAN.objId:
+          case GAME_PIECES.PACMAN.objId:
           tile.classList.add(GAME_PIECES.PACMAN.className);
 
           // For Pacman, we will add yet another
@@ -127,6 +131,9 @@ function createTiles(data) {
           if (pacman.powerUp) {
             tile.classList.add(`powerup-${pacman.direction}`);
           }
+          break;
+        case GAME_PIECES.POWERUP.objId:
+          tile.classList.add(GAME_PIECES.POWERUP.className);
           break;
         default:
           break;
@@ -198,6 +205,10 @@ function isCoin(x, y) {
   return isPiece(x, y, GAME_PIECES.COIN.objId);
 }
 
+function isPowerup(x, y) {
+  return isPiece(x, y, GAME_PIECES.POWERUP.objId);
+}
+
 function findCoinCoords() {
   let coins = [];
   let rowCount = 0;
@@ -248,7 +259,7 @@ function updateGameData(character, newX, newY, objId1, objId2) {
 // or changing the ground
 // whatever was there, the ghost leaves it there.
 
-function movePacman(isWall, isGhost, isCoin, newX, newY) {
+function movePacman(isWall, isGhost, isCoin, isPowerup, newX, newY) {
   if (!isWall) {
     if (!pacman.powerUp && isGhost){
       endGame();
@@ -258,6 +269,9 @@ function movePacman(isWall, isGhost, isCoin, newX, newY) {
         score = score + 50;
       } else if (isCoin) {
         score = score + 10;
+      } else if (isPowerup) {
+        score = score + 25;
+        pacman.powerUp = true;
       }
       updateGameData(pacman,
                     newX,
@@ -282,8 +296,9 @@ function moveDown() {
   let isWallNext = isWall(newX, newY);
   let isGhostNext = isGhost(newX, newY);
   let isCoinNext = isCoin(newX, newY);
+  let isPowerupNext = isPowerup(newX, newY);
 
-  movePacman(isWallNext, isGhostNext, isCoinNext, newX, newY);
+  movePacman(isWallNext, isGhostNext, isCoinNext, isPowerupNext, newX, newY);
 }
 
 function moveUp() {
@@ -293,8 +308,9 @@ function moveUp() {
   let isWallNext = isWall(newX, newY);
   let isGhostNext = isGhost(newX, newY);
   let isCoinNext = isCoin(newX, newY);
+  let isPowerupNext = isPowerup(newX, newY);
 
-  movePacman(isWallNext, isGhostNext, isCoinNext, newX, newY);
+  movePacman(isWallNext, isGhostNext, isCoinNext, isPowerupNext, newX, newY);
 }
 
 function moveLeft() {
@@ -304,10 +320,9 @@ function moveLeft() {
   let isWallNext = isWall(newX, newY);
   let isGhostNext = isGhost(newX, newY);
   let isCoinNext = isCoin(newX, newY);
+  let isPowerupNext = isPowerup(newX, newY);
 
-  movePacman(isWallNext, isGhostNext, isCoinNext, newX, newY);
-
-}
+  movePacman(isWallNext, isGhostNext, isCoinNext, isPowerupNext, newX, newY);}
 
 function moveRight() {
   pacman.direction = 'right';
@@ -316,9 +331,9 @@ function moveRight() {
   let isWallNext = isWall(newX, newY);
   let isGhostNext = isGhost(newX, newY);
   let isCoinNext = isCoin(newX, newY);
+  let isPowerupNext = isPowerup(newX, newY);
 
-  movePacman(isWallNext, isGhostNext, isCoinNext, newX, newY);
-
+  movePacman(isWallNext, isGhostNext, isCoinNext, isPowerupNext, newX, newY);
 }
 
 // This function sets up the listener for the whole page.
