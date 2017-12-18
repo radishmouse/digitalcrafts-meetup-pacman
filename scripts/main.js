@@ -265,7 +265,7 @@ function updateGameData(character, newX, newY, objId1, objId2) {
 function movePacman(isWall, isGhost, isCoin, isPowerup, newX, newY) {
   if (!isWall) {
     if (!pacman.powerUp && isGhost){
-      endGame();
+      loseGame();
     } else {
 
       if (isGhost) {
@@ -416,17 +416,24 @@ function hasStuffLeftToEat() {
                  .length > 0;
 }
 
-function winGame() {
-  cancelAnimationFrame(GAME_LOOP);
-  document.querySelector('#yay').classList.add('win');
-}
-
-function endGame() {
-  console.log('game over');
-  cancelAnimationFrame(GAME_LOOP);
+function loseGame() {
+  document.querySelector('#poster').classList.add('lose');
+  document.querySelector('#poster').textContent = 'oh noes';
   pacman.direction = 'dead';
   eraseMap();
   drawMap();
+  _endGame();
+}
+
+function winGame() {
+  document.querySelector('#poster').classList.add('win');
+  document.querySelector('#poster').textContent = 'yay';
+  _endGame();
+}
+
+function _endGame() {
+  document.querySelector('#poster').classList.add('end');
+  cancelAnimationFrame(GAME_LOOP);
 }
 
 // Finally, after we define all of our functions, we need to start

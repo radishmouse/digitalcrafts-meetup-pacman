@@ -56,7 +56,7 @@ body > div {
   text-align: right;
 }
 
-#yay {
+#poster {
   position: absolute;
   top: 50%;
   transform: translateY(-40%) scale(0.00001);
@@ -65,12 +65,19 @@ body > div {
   text-align: center;
   font-size: 14em;
   font-family: 'Press Start 2P', cursive;
-  color: yellow;
   opacity: 0;
   transition: all 1s ease-out;
 }
 
-#yay.win {
+#poster.win {
+  color: yellow;
+}
+
+#poster.lose {
+  color: red;
+}
+
+#poster.end {
   opacity: 1;
   transform: translateY(-20%) scale(1.0);
 }
